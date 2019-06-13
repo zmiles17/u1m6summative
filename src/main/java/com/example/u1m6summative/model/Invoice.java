@@ -1,17 +1,17 @@
 package com.example.u1m6summative.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Invoice {
 
     private int invoiceId;
     private int customerId;
-    private Date orderDate;
-    private Date pickUpDate;
-    private Date returndate;
-    private BigDecimal lateFee;
+    private LocalDate orderDate;
+    private LocalDate pickUpDate;
+    private LocalDate returnDate;
+    private Double lateFee;
 
     public int getInvoiceId() {
         return invoiceId;
@@ -29,35 +29,35 @@ public class Invoice {
         this.customerId = customerId;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public Date getPickUpDate() {
+    public LocalDate getPickUpDate() {
         return pickUpDate;
     }
 
-    public void setPickUpDate(Date pickUpDate) {
+    public void setPickUpDate(LocalDate pickUpDate) {
         this.pickUpDate = pickUpDate;
     }
 
-    public Date getReturndate() {
-        return returndate;
+    public LocalDate getReturndate() {
+        return returnDate;
     }
 
-    public void setReturndate(Date returndate) {
-        this.returndate = returndate;
+    public void setReturndate(LocalDate returndate) {
+        this.returnDate = returndate;
     }
 
-    public BigDecimal getLateFee() {
+    public Double getLateFee() {
         return lateFee;
     }
 
-    public void setLateFee(BigDecimal lateFee) {
+    public void setLateFee(Double lateFee) {
         this.lateFee = lateFee;
     }
 
@@ -70,12 +70,12 @@ public class Invoice {
                 customerId == invoice.customerId &&
                 orderDate.equals(invoice.orderDate) &&
                 pickUpDate.equals(invoice.pickUpDate) &&
-                returndate.equals(invoice.returndate) &&
+                returnDate.equals(invoice.returnDate) &&
                 lateFee.equals(invoice.lateFee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, customerId, orderDate, pickUpDate, returndate, lateFee);
+        return Objects.hash(invoiceId, customerId, orderDate, pickUpDate, returnDate, lateFee);
     }
 }
