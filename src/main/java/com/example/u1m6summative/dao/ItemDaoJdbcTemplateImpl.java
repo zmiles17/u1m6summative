@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public class ItemDaoJdbcTemplateImpl implements ItemDao {
     @Override
-    public Item addItem(InvoiceItem invoiceItem) {
+    public Item addItem(Item item) {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class ItemDaoJdbcTemplateImpl implements ItemDao {
     }
 
     @Override
-    public Item updateItem(InvoiceItem invoiceItem) {
+    public Item updateItem(Item item) {
         return null;
     }
 

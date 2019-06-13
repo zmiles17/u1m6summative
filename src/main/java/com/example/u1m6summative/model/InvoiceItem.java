@@ -12,6 +12,7 @@ public class InvoiceItem {
     private BigDecimal unitRate;
     private BigDecimal discount;
 
+
     public int getInvoiceItemId() {
         return invoiceItemId;
     }
