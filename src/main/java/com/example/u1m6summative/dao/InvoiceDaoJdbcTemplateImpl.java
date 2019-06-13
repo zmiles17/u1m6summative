@@ -27,7 +27,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "select * from invoice";
 
     private static final String UPDATE_INVOICE_SQL =
-            "update invoice set customer_Id = ?, order_Date = ?, pickup_Date = ?, return_Date = ?, late_Fee = ? where invoiceId = ?";
+            "update invoice set customer_Id = ?, order_Date = ?, pickup_Date = ?, return_Date = ?, late_Fee = ? where invoice_Id = ?";
 
     private static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_Id = ?";
@@ -42,7 +42,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     public Invoice addInvoice(Invoice invoice) {
         jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
 
-        int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID", Integer.class);
+        int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
 
         invoice.setInvoiceId(id);
 
@@ -69,7 +69,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
         jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getInvoiceId(), invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
 
-        return invoice;
+        return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, invoice.getInvoiceId());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
         java.sql.Date mySqlDate3 = rs.getDate("return_date");
         LocalDate myLocalDate3 = mySqlDate3.toLocalDate();
         invoice.setReturndate(myLocalDate3);
-        invoice.setLateFee(rs.getBigDecimal("late_fee"));
+        invoice.setLateFee(rs.getDouble("late_fee"));
 
         return invoice;
     }

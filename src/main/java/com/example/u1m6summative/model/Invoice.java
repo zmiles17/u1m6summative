@@ -11,7 +11,7 @@ public class Invoice {
     private LocalDate orderDate;
     private LocalDate pickUpDate;
     private LocalDate returnDate;
-    private BigDecimal lateFee;
+    private Double lateFee;
 
     public int getInvoiceId() {
         return invoiceId;
@@ -53,11 +53,11 @@ public class Invoice {
         this.returnDate = returndate;
     }
 
-    public BigDecimal getLateFee() {
+    public Double getLateFee() {
         return lateFee;
     }
 
-    public void setLateFee(BigDecimal lateFee) {
+    public void setLateFee(Double lateFee) {
         this.lateFee = lateFee;
     }
 
