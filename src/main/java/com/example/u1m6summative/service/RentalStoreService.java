@@ -6,6 +6,7 @@ import com.example.u1m6summative.dao.InvoiceItemDao;
 import com.example.u1m6summative.dao.ItemDao;
 import com.example.u1m6summative.model.Address;
 import com.example.u1m6summative.model.Customer;
+import com.example.u1m6summative.model.InvoiceItem;
 import com.example.u1m6summative.viewmodel.RentalStoreViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,6 +58,28 @@ public class RentalStoreService {
 
     private RentalStoreViewModel buildStoreViewModel(Address address) {
         return null;
+    }
+
+    //Invoice Item
+
+    public InvoiceItem getInvoiceItem(int id) {
+        return invoiceItemDao.getInvoiceItem(id);
+    }
+
+    public Customer saveCustomer(Customer customer) {
+        return customerDao.addCustomer(customer);
+    }
+
+    public List<Customer> findAllCustomers() {
+        return customerDao.getAllCustomer();
+    }
+
+    public Customer updateCustomer(Customer customer) {
+        return customerDao.updateCustomer(customer);
+    }
+
+    public void deleteCustomer(int id) {
+        customerDao.deleteCustomer(id);
     }
 
 }
