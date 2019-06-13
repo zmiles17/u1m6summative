@@ -1,34 +1,99 @@
 package com.example.u1m6summative.dao;
 
 import com.example.u1m6summative.model.Invoice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
+
 @Repository
 public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
-    @Override
-    public Invoice addInvoice(Invoice invoice) {
-        return null;
+    private JdbcTemplate jdbcTemplate;
+
+    private static final String INSERT_INVOICE_SQL =
+            "insert into invoice (customer_Id, order_Date, pickup_Date, return_Date, late_Fee) values (?, ?, ?, ?, ?)";
+
+    private static final String SELECT_INVOICE_SQL =
+            "select * from invoice where invoice_Id = ?";
+
+    private static final String SELECT_ALL_INVOICES_SQL =
+            "select * from invoice";
+
+    private static final String UPDATE_INVOICE_SQL =
+            "update invoice set customer_Id = ?, order_Date = ?, pickup_Date = ?, return_Date = ?, late_Fee = ? where invoice_Id = ?";
+
+    private static final String DELETE_INVOICE_SQL =
+            "delete from invoice where invoice_Id = ?";
+
+    @Autowired
+    public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<Invoice> getAllInvoice() {
-        return null;
+    @Transactional
+    public Invoice addInvoice(Invoice invoice) {
+        jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
+
+        int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+
+        invoice.setInvoiceId(id);
+
+        return invoice;
     }
 
     @Override
     public Invoice getInvoice(int id) {
-        return null;
+        try {
+            return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
-    public Invoice updateInvoice(Invoice invoice) {
-        return null;
+    public List<Invoice> getAllInvoice() {
+
+        return jdbcTemplate.query(SELECT_ALL_INVOICES_SQL, this::mapRowToInvoice);
+    }
+
+    @Override
+    public Invoice updateInvoice(Invoice invoice){
+
+        jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getInvoiceId(), invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
+
+        return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, invoice.getInvoiceId());
     }
 
     @Override
     public void deleteInvoice(int id) {
 
+        jdbcTemplate.update(DELETE_INVOICE_SQL, id);
     }
+
+    private Invoice mapRowToInvoice(ResultSet rs, int rowNum) throws SQLException {
+        Invoice invoice = new Invoice();
+        invoice.setInvoiceId(rs.getInt("invoice_id"));
+        invoice.setCustomerId(rs.getInt("customer_id"));
+        java.sql.Date mySqlDate = rs.getDate("order_date");
+        LocalDate myLocalDate = mySqlDate.toLocalDate();
+        invoice.setOrderDate(myLocalDate);
+        java.sql.Date mySqlDate2 = rs.getDate("pickup_date");
+        LocalDate myLocalDate2 = mySqlDate2.toLocalDate();
+        invoice.setPickUpDate(myLocalDate2);
+        java.sql.Date mySqlDate3 = rs.getDate("return_date");
+        LocalDate myLocalDate3 = mySqlDate3.toLocalDate();
+        invoice.setReturndate(myLocalDate3);
+        invoice.setLateFee(rs.getDouble("late_fee"));
+
+        return invoice;
+    }
+
 }
