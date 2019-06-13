@@ -1,13 +1,12 @@
 package com.example.u1m6summative.model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Item {
     private int itemId;
     private String name;
     private String Description;
-    private BigDecimal dailyRate;
+    private Double dailyRate;
 
     public int getItemId() {
         return itemId;
@@ -33,11 +32,11 @@ public class Item {
         Description = description;
     }
 
-    public BigDecimal getDailyRate() {
+    public Double getDailyRate() {
         return dailyRate;
     }
 
-    public void setDailyRate(BigDecimal dailyRate) {
+    public void setDailyRate(Double dailyRate) {
         this.dailyRate = dailyRate;
     }
 
@@ -48,7 +47,7 @@ public class Item {
         Item item = (Item) o;
         return itemId == item.itemId &&
                 name.equals(item.name) &&
-                Description.equals(item.Description) &&
+                Objects.equals(Description, item.Description) &&
                 dailyRate.equals(item.dailyRate);
     }
 
