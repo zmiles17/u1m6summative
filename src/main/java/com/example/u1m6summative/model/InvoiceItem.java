@@ -9,8 +9,9 @@ public class InvoiceItem {
     private int invoiceId;
     private int itemId;
     private int quantity;
-    private BigDecimal unitRate;
-    private BigDecimal discount;
+    private Double unitRate;
+    private Double discount;
+
 
     public int getInvoiceItemId() {
         return invoiceItemId;
