@@ -6,13 +6,13 @@ import com.example.u1m6summative.model.Item;
 import java.util.List;
 
 public interface ItemDao {
-    Item addItem(InvoiceItem invoiceItem);
+    Item addItem(Item item);
 
     List<Item> getAllItem();
 
     Item getItem(int id);
 
-    Item updateItem(InvoiceItem invoiceItem);
+    void updateItem(Item item);
 
     void deleteItem(int id);
 }
