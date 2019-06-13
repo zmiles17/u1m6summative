@@ -7,7 +7,7 @@ import com.example.u1m6summative.dao.InvoiceItemDao;
 import com.example.u1m6summative.dao.ItemDao;
 import com.example.u1m6summative.model.Address;
 import com.example.u1m6summative.model.Customer;
-import com.example.u1m6summative.viewmodel.RentalStoreViewModel;
+import com.example.u1m6summative.viewmodel.PurchaseViewModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 
 public class ServiceLayerTest {
 
-    RentalStoreService service;
+    ServiceLayer service;
     CustomerDao customerDao;
     InvoiceDao invoiceDao;
     ItemDao itemDao;
@@ -28,12 +28,12 @@ public class ServiceLayerTest {
     @Before
     public void setUp() throws Exception {
         setUpCustomerMock();
-        service = new RentalStoreService(customerDao, invoiceDao, itemDao, invoiceItemDao);
+        service = new ServiceLayer(customerDao, invoiceDao, itemDao, invoiceItemDao);
     }
 
     @Test
     public void addStore() {
-        RentalStoreViewModel rsvm = new RentalStoreViewModel();
+        PurchaseViewModel rsvm = new PurchaseViewModel();
         rsvm.setAddress(new Address("street", "city", "state", "zip"));
         rsvm.setStoreName("store name");
         rsvm.setPhone("phone number");

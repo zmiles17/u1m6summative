@@ -6,7 +6,8 @@ import com.example.u1m6summative.dao.InvoiceItemDao;
 import com.example.u1m6summative.dao.ItemDao;
 import com.example.u1m6summative.model.Address;
 import com.example.u1m6summative.model.Customer;
-import com.example.u1m6summative.viewmodel.RentalStoreViewModel;
+import com.example.u1m6summative.model.InvoiceItem;
+import com.example.u1m6summative.viewmodel.PurchaseViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class RentalStoreService {
+public class ServiceLayer {
 
     private CustomerDao customerDao;
     private InvoiceDao invoiceDao;
@@ -22,7 +23,7 @@ public class RentalStoreService {
     private InvoiceItemDao invoiceItemDao;
 
     @Autowired
-    public RentalStoreService(CustomerDao customerDao, InvoiceDao invoiceDao, ItemDao itemDao, InvoiceItemDao invoiceItemDao) {
+    public ServiceLayer(CustomerDao customerDao, InvoiceDao invoiceDao, ItemDao itemDao, InvoiceItemDao invoiceItemDao) {
         this.customerDao = customerDao;
         this.invoiceDao = invoiceDao;
         this.itemDao = itemDao;
@@ -30,8 +31,35 @@ public class RentalStoreService {
     }
 
     @Transactional
-    public RentalStoreViewModel saveStore(RentalStoreViewModel viewModel) {
-        return null;
+    public PurchaseViewModel saveInvoiceItem(PurchaseViewModel viewModel) {
+
+        //Persist InvoiceItem
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(viewModel.getInvoiceId());
+
+
+        // Add invoice id to invoiceitems on the order and persist to database
+        List<InvoiceItem> invoiceItems = viewModel.getInvoiceItemList();
+
+        invoiceItem.stream()
+                .forEach(invoiceItem ->
+                {
+                    invoiceItem.setInvoiceId(viewModel.getInvoiceId());
+                    invoiceDao.addInvoice(invoiceItem);
+                });
+
+                invoiceItems = invoiceDao.get
+
+        return viewModel;
+
+        /*
+    private int invoiceItemId;
+    private int invoiceId;
+    private int itemId;
+    private int quantity;
+    private BigDecimal unitRate;
+    private BigDecimal discount;
+         */
 
     }
 
@@ -55,7 +83,8 @@ public class RentalStoreService {
         customerDao.deleteCustomer(id);
     }
 
-    private RentalStoreViewModel buildStoreViewModel(Address address) {
+    private PurchaseViewModel buildStoreViewModel(Address address) {
+        Customer customer = customerDao.getCustomer(customer.getCustomerId())
         return null;
     }
 
