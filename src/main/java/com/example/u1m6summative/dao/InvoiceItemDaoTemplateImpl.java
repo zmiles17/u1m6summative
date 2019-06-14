@@ -1,6 +1,7 @@
 package com.example.u1m6summative.dao;
 
 import com.example.u1m6summative.model.InvoiceItem;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,6 +36,9 @@ public class InvoiceItemDaoTemplateImpl implements InvoiceItemDao {
 
     private static final String DELETE_INVOICE_ITEM_SQL =
             "delete from invoice_item where invoice_item_id =  ?";
+
+    private static final String SELECT_INVOICE_ITEM_BY_INVOICE_SQL =
+            "select * from invoice_item where invoice_id = ?";
 
     @Override
     public InvoiceItem addInvoiceItem(InvoiceItem invoiceItem) {
@@ -92,5 +96,13 @@ public class InvoiceItemDaoTemplateImpl implements InvoiceItemDao {
         invoiceItem.setInvoiceId(rs.getInt("invoice_id"));
         invoiceItem.setInvoiceItemId(rs.getInt("invoice_item_id"));
         return invoiceItem;
+    }
+
+    // TODO
+    @Override
+    public List<InvoiceItem> getInvoiceItemsByInvoiceId(int invoiceId) {
+        return jdbcTemplate.query(
+                SELECT_ALL_INVOICE_ITEM_SQL,
+                this::mapRowToInvoiceItem,invoiceId);
     }
 }
