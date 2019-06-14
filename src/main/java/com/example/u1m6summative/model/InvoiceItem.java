@@ -45,19 +45,19 @@ public class InvoiceItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getUnitRate() {
+    public Double getUnitRate() {
         return unitRate;
     }
 
-    public void setUnitRate(BigDecimal unitRate) {
+    public void setUnitRate(Double unitRate) {
         this.unitRate = unitRate;
     }
 
-    public BigDecimal getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 

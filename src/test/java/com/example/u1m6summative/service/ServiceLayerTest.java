@@ -44,7 +44,7 @@ public class ServiceLayerTest {
         customer.setEmail("email@gmail.com");
         customer.setCompany("Google");
         customer.setPhone("543-543-2313");
-        customer = service.saveCustomer(customer);
+       // customer = service.saveCustomer(customer);
 
         List<Customer> customers = new ArrayList<>();
         customers.add(customer);

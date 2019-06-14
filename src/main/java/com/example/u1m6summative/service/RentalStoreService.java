@@ -36,50 +36,50 @@ public class RentalStoreService {
 
     }
 
-    public Customer findCustomer(int id) {
-        return customerDao.getCustomer(id);
-    }
-
-    public Customer saveCustomer(Customer customer) {
-        return customerDao.addCustomer(customer);
-    }
-
-    public List<Customer> findAllCustomers() {
-        return customerDao.getAllCustomer();
-    }
-
-    public Customer updateCustomer(Customer customer) {
-        return customerDao.updateCustomer(customer);
-    }
-
-    public void deleteCustomer(int id) {
-        customerDao.deleteCustomer(id);
-    }
-
-    private RentalStoreViewModel buildStoreViewModel(Address address) {
-        return null;
-    }
-
-    //Invoice Item
-
-    public InvoiceItem getInvoiceItem(int id) {
-        return invoiceItemDao.getInvoiceItem(id);
-    }
-
-    public Customer saveCustomer(Customer customer) {
-        return customerDao.addCustomer(customer);
-    }
-
-    public List<Customer> findAllCustomers() {
-        return customerDao.getAllCustomer();
-    }
-
-    public Customer updateCustomer(Customer customer) {
-        return customerDao.updateCustomer(customer);
-    }
-
-    public void deleteCustomer(int id) {
-        customerDao.deleteCustomer(id);
-    }
+//    public Customer findCustomer(int id) {
+//        return customerDao.getCustomer(id);
+//    }
+//
+//    public Customer saveCustomer(Customer customer) {
+//        return customerDao.addCustomer(customer);
+//    }
+//
+//    public List<Customer> findAllCustomers() {
+//        return customerDao.getAllCustomer();
+//    }
+//
+//    public Customer updateCustomer(Customer customer) {
+//        return customerDao.updateCustomer(customer);
+//    }
+//
+//    public void deleteCustomer(int id) {
+//        customerDao.deleteCustomer(id);
+//    }
+//
+//    private RentalStoreViewModel buildStoreViewModel(Address address) {
+//        return null;
+//    }
+//
+//    //Invoice Item
+//
+//    public InvoiceItem getInvoiceItem(int id) {
+//        return invoiceItemDao.getInvoiceItem(id);
+//    }
+//
+//    public Customer saveCustomer(Customer customer) {
+//        return customerDao.addCustomer(customer);
+//    }
+//
+//    public List<Customer> findAllCustomers() {
+//        return customerDao.getAllCustomer();
+//    }
+//
+//    public Customer updateCustomer(Customer customer) {
+//        return customerDao.updateCustomer(customer);
+//    }
+//
+//    public void deleteCustomer(int id) {
+//        customerDao.deleteCustomer(id);
+//    }
 
 }

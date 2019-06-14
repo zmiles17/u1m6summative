@@ -86,9 +86,9 @@ public class InvoiceItemDaoTemplateImpl implements InvoiceItemDao {
     private InvoiceItem mapRowToInvoiceItem(ResultSet rs, int rowNum) throws SQLException {
         InvoiceItem invoiceItem = new InvoiceItem();
         invoiceItem.setItemId(rs.getInt("item_id"));
-        invoiceItem.setUnitRate(rs.getBigDecimal("unit_rate"));
+        invoiceItem.setUnitRate(rs.getDouble("unit_rate"));
         invoiceItem.setQuantity(rs.getInt("quantity"));
-        invoiceItem.setDiscount(rs.getBigDecimal("discount"));
+        invoiceItem.setDiscount(rs.getDouble("discount"));
         invoiceItem.setInvoiceId(rs.getInt("invoice_id"));
         invoiceItem.setInvoiceItemId(rs.getInt("invoice_item_id"));
         return invoiceItem;

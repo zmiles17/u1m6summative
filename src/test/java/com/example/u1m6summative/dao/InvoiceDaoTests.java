@@ -138,7 +138,7 @@ public class InvoiceDaoTests {
     }
 
     @Test
-    public void getByCustomer(){
+    public void getInvoicesByCustomer(){
         Customer customer = new Customer();
         customer.setFirstName("Ramya");
         customer.setLastName("B");
@@ -171,7 +171,7 @@ public class InvoiceDaoTests {
         invoice.setLateFee(Double.valueOf(9.99));
         invoice = invoiceDao.addInvoice(invoice);
 
-        List<Invoice> iList = invoiceDao.getByCustomer("Ramya", "B");
+        List<Invoice> iList = invoiceDao.getInvoicesByCustomer("Ramya", "B");
 
         assertEquals(iList.size(), 3);
 
