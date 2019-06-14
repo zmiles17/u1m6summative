@@ -6,16 +6,18 @@ import com.example.u1m6summative.dao.InvoiceItemDao;
 import com.example.u1m6summative.dao.ItemDao;
 import com.example.u1m6summative.model.Address;
 import com.example.u1m6summative.model.Customer;
+import com.example.u1m6summative.model.Invoice;
 import com.example.u1m6summative.model.InvoiceItem;
 import com.example.u1m6summative.viewmodel.PurchaseViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ServiceLayer {
+public class PurchaseServiceLayer {
 
     private CustomerDao customerDao;
     private InvoiceDao invoiceDao;
@@ -23,7 +25,7 @@ public class ServiceLayer {
     private InvoiceItemDao invoiceItemDao;
 
     @Autowired
-    public ServiceLayer(CustomerDao customerDao, InvoiceDao invoiceDao, ItemDao itemDao, InvoiceItemDao invoiceItemDao) {
+    public PurchaseServiceLayer(CustomerDao customerDao, InvoiceDao invoiceDao, ItemDao itemDao, InvoiceItemDao invoiceItemDao) {
         this.customerDao = customerDao;
         this.invoiceDao = invoiceDao;
         this.itemDao = itemDao;
@@ -41,50 +43,26 @@ public class ServiceLayer {
         // Add invoice id to invoiceitems on the order and persist to database
         List<InvoiceItem> invoiceItems = viewModel.getInvoiceItemList();
 
-        invoiceItem.stream()
-                .forEach(invoiceItem ->
+        invoiceItems.stream()
+                .forEach(item ->
                 {
-                    invoiceItem.setInvoiceId(viewModel.getInvoiceId());
-                    invoiceDao.addInvoice(invoiceItem);
+                    item.setInvoiceId(viewModel.getInvoiceId());
+                    item = invoiceItemDao.addInvoiceItem(item);
                 });
 
-                invoiceItems = invoiceDao.get
+                invoiceItems = invoiceItemDao.getInvoiceItemsByCustomer(viewModel.getCustomerId());
+                viewModel.setInvoiceItemList(invoiceItems);
 
         return viewModel;
 
-        /*
-    private int invoiceItemId;
-    private int invoiceId;
-    private int itemId;
-    private int quantity;
-    private BigDecimal unitRate;
-    private BigDecimal discount;
-         */
-
     }
 
-    public Customer findCustomer(int id) {
-        return customerDao.getCustomer(id);
-    }
+    private PurchaseViewModel buildPurchaseViewModel(Customer customer) {
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomer(customer.getCustomerId());
+        List<InvoiceItem> invoiceItemList;
+        invoiceList.stream()
+                .forEach(item -> invoiceItemDao.addInvoiceItem(item.getInvoiceId()));
 
-    public Customer saveCustomer(Customer customer) {
-        return customerDao.addCustomer(customer);
-    }
-
-    public List<Customer> findAllCustomers() {
-        return customerDao.getAllCustomer();
-    }
-
-    public Customer updateCustomer(Customer customer) {
-        return customerDao.updateCustomer(customer);
-    }
-
-    public void deleteCustomer(int id) {
-        customerDao.deleteCustomer(id);
-    }
-
-    private PurchaseViewModel buildStoreViewModel(Address address) {
-        Customer customer = customerDao.getCustomer(customer.getCustomerId())
         return null;
     }
 

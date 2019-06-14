@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 
 public class ServiceLayerTest {
 
-    ServiceLayer service;
+    PurchaseServiceLayer service;
     CustomerDao customerDao;
     InvoiceDao invoiceDao;
     ItemDao itemDao;
@@ -28,7 +28,7 @@ public class ServiceLayerTest {
     @Before
     public void setUp() throws Exception {
         setUpCustomerMock();
-        service = new ServiceLayer(customerDao, invoiceDao, itemDao, invoiceItemDao);
+        service = new PurchaseServiceLayer(customerDao, invoiceDao, itemDao, invoiceItemDao);
     }
 
     @Test
