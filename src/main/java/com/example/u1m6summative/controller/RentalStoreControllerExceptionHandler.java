@@ -56,5 +56,13 @@ public class RentalStoreControllerExceptionHandler {
         ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error,HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }
+
+    @ExceptionHandler(value = {IllegalStateException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<VndErrors> badRequest(IllegalStateException e, WebRequest request){
+        VndErrors error= new VndErrors(request.toString(),e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error,HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
 }
 

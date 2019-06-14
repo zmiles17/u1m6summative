@@ -45,13 +45,17 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     @Transactional
     public Invoice addInvoice(Invoice invoice) {
-        jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
-
+        try{
+            jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
         int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
 
         invoice.setInvoiceId(id);
 
         return invoice;
+        } catch (NullPointerException e) {
+            return null;
+        }
+
     }
 
     @Override
@@ -85,7 +89,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     }
 
     @Override
-    public List<Invoice> getByCustomer(String firstName, String lastName) {
+    public List<Invoice> getInvoicesByCustomer(String firstName, String lastName) {
         try {
             return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMER, this::mapRowToInvoice, firstName, lastName);
         } catch (EmptyResultDataAccessException e) {
