@@ -14,4 +14,6 @@ public interface InvoiceDao {
     Invoice updateInvoice(Invoice invoice);
 
     void deleteInvoice(int id);
+
+    List<Invoice> getInvoicesByCustomer(String firstName, String lastName);
 }

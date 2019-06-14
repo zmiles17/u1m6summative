@@ -32,6 +32,11 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     private static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_Id = ?";
 
+    private static final String SELECT_INVOICES_BY_CUSTOMER =
+            "select * from invoice" +
+                    "  inner join customer on invoice.customer_id = customer.customer_id" +
+                    "  where customer.first_name like ? or customer.last_name like ?";
+
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -40,13 +45,17 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     @Transactional
     public Invoice addInvoice(Invoice invoice) {
-        jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
-
+        try{
+            jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
         int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
 
         invoice.setInvoiceId(id);
 
         return invoice;
+        } catch (NullPointerException e) {
+            return null;
+        }
+
     }
 
     @Override
@@ -67,7 +76,8 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     public Invoice updateInvoice(Invoice invoice){
 
-        jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getInvoiceId(), invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
+        jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getInvoiceId(), invoice.getCustomerId(), invoice.getOrderDate(),
+                invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
 
         return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, invoice.getInvoiceId());
     }
@@ -76,6 +86,15 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     public void deleteInvoice(int id) {
 
         jdbcTemplate.update(DELETE_INVOICE_SQL, id);
+    }
+
+    @Override
+    public List<Invoice> getInvoicesByCustomer(String firstName, String lastName) {
+        try {
+            return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMER, this::mapRowToInvoice, firstName, lastName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private Invoice mapRowToInvoice(ResultSet rs, int rowNum) throws SQLException {

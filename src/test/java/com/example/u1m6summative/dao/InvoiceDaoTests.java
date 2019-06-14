@@ -10,8 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,11 +62,11 @@ public class InvoiceDaoTests {
 
         assertEquals(invoice1, invoice);
 
-//        invoiceDao.deleteInvoice(invoice.getInvoiceId());
-//
-//        invoice1 = invoiceDao.getInvoice(invoice.getInvoiceId());
-//
-//        assertNull(invoice1);
+        invoiceDao.deleteInvoice(invoice.getInvoiceId());
+
+        invoice1 = invoiceDao.getInvoice(invoice.getInvoiceId());
+
+        assertNull(invoice1);
 
     }
 
@@ -133,5 +135,45 @@ public class InvoiceDaoTests {
         Invoice invoice1 = invoiceDao.getInvoice(invoice.getInvoiceId());
 
         assertEquals(invoice1, invoice);
+    }
+
+    @Test
+    public void getInvoicesByCustomer(){
+        Customer customer = new Customer();
+        customer.setFirstName("Ramya");
+        customer.setLastName("B");
+        customer.setEmail("rb@yahoo.com");
+        customer.setCompany("Ramya's Tool & Die");
+        customer.setPhone("213-746-9957");
+        customerDao.addCustomer(customer);
+
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(customer.getCustomerId());
+        invoice.setOrderDate(LocalDate.of(2019, 6, 13));
+        invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
+        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setLateFee(Double.valueOf(19.99));
+        invoice = invoiceDao.addInvoice(invoice);
+
+        invoice = new Invoice();
+        invoice.setCustomerId(customer.getCustomerId());
+        invoice.setOrderDate(LocalDate.of(2019, 6, 18));
+        invoice.setPickUpDate(LocalDate.of(2019, 6, 18));
+        invoice.setReturndate(LocalDate.of(2019, 6, 25));
+        invoice.setLateFee(Double.valueOf(29.99));
+        invoice = invoiceDao.addInvoice(invoice);
+
+        invoice = new Invoice();
+        invoice.setCustomerId(customer.getCustomerId());
+        invoice.setOrderDate(LocalDate.of(2019, 6, 21));
+        invoice.setPickUpDate(LocalDate.of(2019, 6, 28));
+        invoice.setReturndate(LocalDate.of(2019, 7, 4));
+        invoice.setLateFee(Double.valueOf(9.99));
+        invoice = invoiceDao.addInvoice(invoice);
+
+        List<Invoice> iList = invoiceDao.getInvoicesByCustomer("Ramya", "B");
+
+        assertEquals(iList.size(), 3);
+
     }
 }
