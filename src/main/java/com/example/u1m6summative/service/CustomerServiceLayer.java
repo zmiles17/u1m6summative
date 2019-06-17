@@ -92,15 +92,8 @@ public class CustomerServiceLayer {
         return customerViewModelList;
     }
 
-    public void updateCustomer(CustomerViewModel customerViewModel) {
-        Customer customer = customerViewModel.getCustomer();
-//        customer.setCustomerId(purchaseViewModel.getCustomerId());
-        customer.setFirstName(customer.getFirstName());
-        customer.setLastName(customer.getLastName());
-        customer.setEmail(customer.getEmail());
-        customer.setCompany(customer.getCompany());
-        customer.setPhone(customer.getPhone());
-        customerDao.updateCustomer(customer);
+    public Customer updateCustomer(Customer customer) {
+        return customerDao.updateCustomer(customer);
     }
 
     public void deleteCustomer(int id) {
