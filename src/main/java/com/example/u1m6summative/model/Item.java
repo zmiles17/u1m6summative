@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Item {
     private int itemId;
     private String name;
-    private String Description;
+    private String description;
     private Double dailyRate;
 
     public int getItemId() {
@@ -25,11 +25,11 @@ public class Item {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public Double getDailyRate() {
@@ -47,12 +47,12 @@ public class Item {
         Item item = (Item) o;
         return itemId == item.itemId &&
                 name.equals(item.name) &&
-                Objects.equals(Description, item.Description) &&
+                Objects.equals(description, item.description) &&
                 dailyRate.equals(item.dailyRate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, name, Description, dailyRate);
+        return Objects.hash(itemId, name, description, dailyRate);
     }
 }
