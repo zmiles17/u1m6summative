@@ -38,14 +38,8 @@ public class RentalStoreController {
 
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice addInvoice(@RequestBody Invoice invoice){
-
-        try {
+    public Invoice addInvoice(@RequestBody Invoice invoice) throws IllegalStateException {
         return customerServiceLayer.addInvoice(invoice);
-
-        } catch (IllegalStateException e){
-            return null;
-        }
     }
 
     @RequestMapping(value = "/invoice/{invoiceId}", method = RequestMethod.DELETE)
