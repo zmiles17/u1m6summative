@@ -1,6 +1,5 @@
 package com.example.u1m6summative.model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class InvoiceItem {
@@ -11,7 +10,6 @@ public class InvoiceItem {
     private int quantity;
     private Double unitRate;
     private Double discount;
-
 
     public int getInvoiceItemId() {
         return invoiceItemId;
