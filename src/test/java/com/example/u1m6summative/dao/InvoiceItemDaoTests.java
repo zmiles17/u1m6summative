@@ -68,7 +68,7 @@ public class InvoiceItemDaoTests {
         invoice.setLateFee(19.00);
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 13));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 13));
         Invoice actualInvoice = invoiceDao.addInvoice(invoice);
 
         InvoiceItem invoiceItem = new InvoiceItem();
@@ -106,7 +106,7 @@ public class InvoiceItemDaoTests {
         invoice.setLateFee(19.00);
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 13));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 13));
         Invoice actualInvoice = invoiceDao.addInvoice(invoice);
 
         InvoiceItem invoiceItem = new InvoiceItem();
@@ -151,7 +151,7 @@ public class InvoiceItemDaoTests {
         invoice.setLateFee(19.00);
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 13));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 13));
         Invoice actualInvoice = invoiceDao.addInvoice(invoice);
 
         InvoiceItem invoiceItem = new InvoiceItem();

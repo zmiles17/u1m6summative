@@ -54,7 +54,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(19.00));
         invoice=invoiceDao.addInvoice(invoice);
 
@@ -86,7 +86,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(19.99));
         invoiceDao.addInvoice(invoice);
 
@@ -95,7 +95,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(14.99));
         invoiceDao.addInvoice(invoice);
 
@@ -120,7 +120,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(19.99));
         invoice = invoiceDao.addInvoice(invoice);
 
@@ -128,7 +128,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(29.99));
         invoice = invoiceDao.updateInvoice(invoice);
 
@@ -151,7 +151,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 13));
-        invoice.setReturndate(LocalDate.of(2019, 6, 14));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 14));
         invoice.setLateFee(Double.valueOf(19.99));
         invoice = invoiceDao.addInvoice(invoice);
 
@@ -159,7 +159,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 18));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 18));
-        invoice.setReturndate(LocalDate.of(2019, 6, 25));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 25));
         invoice.setLateFee(Double.valueOf(29.99));
         invoice = invoiceDao.addInvoice(invoice);
 
@@ -167,7 +167,7 @@ public class InvoiceDaoTests {
         invoice.setCustomerId(customer.getCustomerId());
         invoice.setOrderDate(LocalDate.of(2019, 6, 21));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 28));
-        invoice.setReturndate(LocalDate.of(2019, 7, 4));
+        invoice.setReturnDate(LocalDate.of(2019, 7, 4));
         invoice.setLateFee(Double.valueOf(9.99));
         invoice = invoiceDao.addInvoice(invoice);
 

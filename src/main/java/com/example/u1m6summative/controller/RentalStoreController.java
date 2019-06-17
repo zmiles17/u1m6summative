@@ -135,7 +135,8 @@ public class RentalStoreController {
             return null;
         }
     }
-        @RequestMapping(value = "/invoice/{firstName}/{lastName}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/invoice/{firstName}/{lastName}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<Invoice> getInvoicesByCustomer(@PathVariable String firstName, String lastName){
         List<Invoice> iList = customerServiceLayer.getInvoicesByCustomer(firstName, lastName);

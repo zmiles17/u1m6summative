@@ -49,7 +49,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Transactional
     public Invoice addInvoice(Invoice invoice) {
         try{
-            jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
+            jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getOrderDate(), invoice.getPickUpDate(), invoice.getReturnDate(), invoice.getLateFee());
         int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
 
         invoice.setInvoiceId(id);
@@ -80,7 +80,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     public Invoice updateInvoice(Invoice invoice){
 
         jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getInvoiceId(), invoice.getCustomerId(), invoice.getOrderDate(),
-                invoice.getPickUpDate(), invoice.getReturndate(), invoice.getLateFee());
+                invoice.getPickUpDate(), invoice.getReturnDate(), invoice.getLateFee());
 
         return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, invoice.getInvoiceId());
     }
@@ -122,7 +122,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
         invoice.setPickUpDate(myLocalDate2);
         java.sql.Date mySqlDate3 = rs.getDate("return_date");
         LocalDate myLocalDate3 = mySqlDate3.toLocalDate();
-        invoice.setReturndate(myLocalDate3);
+        invoice.setReturnDate(myLocalDate3);
         invoice.setLateFee(rs.getDouble("late_fee"));
 
         return invoice;

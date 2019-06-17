@@ -38,7 +38,7 @@ public class CustomerServiceLayerTest {
         actualInvoice.setLateFee(4.00);
         actualInvoice.setOrderDate(LocalDate.of(2019, 6, 13));
         actualInvoice.setPickUpDate(LocalDate.of(2019, 6, 19));
-        actualInvoice.setReturndate(LocalDate.of(2019, 6, 25));
+        actualInvoice.setReturnDate(LocalDate.of(2019, 6, 25));
 
         Invoice expectedInvoice = customerServiceLayer.addInvoice(actualInvoice);
         actualInvoice.setInvoiceId(expectedInvoice.getInvoiceId());
@@ -55,7 +55,7 @@ public class CustomerServiceLayerTest {
         actualInvoice.setLateFee(4.00);
         actualInvoice.setOrderDate(LocalDate.of(2019, 6, 13));
         actualInvoice.setPickUpDate(LocalDate.of(2019, 6, 19));
-        actualInvoice.setReturndate(LocalDate.of(2019, 6, 25));
+        actualInvoice.setReturnDate(LocalDate.of(2019, 6, 25));
         actualInvoice = customerServiceLayer.addInvoice(actualInvoice);
 
      int deleted =   customerServiceLayer.deleteInvoice(actualInvoice.getInvoiceId());
@@ -200,14 +200,14 @@ public class CustomerServiceLayerTest {
         invoice.setLateFee(4.00);
         invoice.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice.setPickUpDate(LocalDate.of(2019, 6, 19));
-        invoice.setReturndate(LocalDate.of(2019, 6, 25));
+        invoice.setReturnDate(LocalDate.of(2019, 6, 25));
 
         Invoice invoice1 = new Invoice();
         invoice1.setCustomerId(1);
         invoice1.setLateFee(4.00);
         invoice1.setOrderDate(LocalDate.of(2019, 6, 13));
         invoice1.setPickUpDate(LocalDate.of(2019, 6, 19));
-        invoice1.setReturndate(LocalDate.of(2019, 6, 25));
+        invoice1.setReturnDate(LocalDate.of(2019, 6, 25));
 
 
         List<Invoice> iList = new ArrayList<>();

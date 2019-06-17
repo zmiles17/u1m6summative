@@ -51,12 +51,12 @@ public class Invoice {
         this.pickUpDate = pickUpDate;
     }
 
-    public LocalDate getReturndate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturndate(LocalDate returndate) {
-        this.returnDate = returndate;
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 
     public Double getLateFee() {
