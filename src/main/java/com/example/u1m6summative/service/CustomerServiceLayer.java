@@ -110,6 +110,10 @@ public class CustomerServiceLayer {
          return  invoiceDao.addInvoice(invoice);
      }
 
+     public List<Invoice> getInvoicesByCustomer(String firstName, String lastName) {
+        return invoiceDao.getInvoicesByCustomer(firstName, lastName);
+     }
+
     @Transactional
      public int deleteInvoice(int invoiceId) throws DataIntegrityViolationException {
          List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceId);

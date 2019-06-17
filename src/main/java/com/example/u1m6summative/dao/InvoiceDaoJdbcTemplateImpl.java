@@ -35,7 +35,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     private static final String SELECT_INVOICES_BY_CUSTOMER =
             "select * from invoice" +
                     "  inner join customer on invoice.customer_id = customer.customer_id" +
-                    "  where customer.first_name like ? or customer.last_name like ?";
+                    "  where LOWER(customer.first_name) like LOWER(?) or LOWER(customer.last_name) like LOWER(?)";
     private static final String SELECT_INVOICES_BY_CUSTOMERID =
             "select * from invoice where customer_id = ?";
 
@@ -94,7 +94,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     public List<Invoice> getInvoicesByCustomer(String firstName, String lastName) {
         try {
-            return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMER, this::mapRowToInvoice, firstName, lastName);
+            return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMER, this::mapRowToInvoice, firstName + "%", lastName + "%");
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

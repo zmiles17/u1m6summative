@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class RentalStoreController {
@@ -58,6 +60,14 @@ public class RentalStoreController {
             throw new DataIntegrityViolationException(ex.getMessage());
         }
 
+    }
+
+    @RequestMapping(value = "/invoice/{firstName}/{lastName}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Invoice> getInvoicesByCustomer(@PathVariable String firstName, String lastName){
+        List<Invoice> iList = customerServiceLayer.getInvoicesByCustomer(firstName, lastName);
+
+        return iList;
     }
 
 
