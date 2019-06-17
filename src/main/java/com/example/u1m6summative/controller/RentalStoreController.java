@@ -9,12 +9,12 @@ import com.example.u1m6summative.model.Item;
 import com.example.u1m6summative.service.CustomerServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.validation.Valid;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,37 +38,31 @@ public class RentalStoreController {
 
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Customer getCustomer(@PathVariable int id) {
-        //TO DO
-     // return customerServiceLayer.ge(id);
-        return null;
+    public Customer getCustomer(@PathVariable int id) throws NullPointerException {
+        return customerServiceLayer.findCustomer(id).getCustomer();
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer getAllCustomer()
+    public List<Customer> getAllCustomer() throws NullPointerException
     {
-        //TO DO
-      //  return customerDao.;
-        return null;
+        List<Customer> customers = new ArrayList<>();
+        customerServiceLayer.findAllCustomers().forEach(viewModel -> customers.add(viewModel.getCustomer()));
+        return customers;
     }
 
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Customer deleteCustomer(@PathVariable int id)
+    public void deleteCustomer(@PathVariable int id)
     {
-        //TO DO
-        //  return customerDao.;
-        return null;
+        customerServiceLayer.deleteCustomer(id);
     }
 
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/customer", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Customer updateCustomer(@RequestBody @Valid Customer customer, @PathVariable int id)
+    public Customer updateCustomer(@RequestBody @Valid Customer customer) throws EmptyResultDataAccessException
     {
-        //TO DO
-        //  return customerDao.;
-        return null;
+        return customerServiceLayer.updateCustomer(customer);
     }
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
