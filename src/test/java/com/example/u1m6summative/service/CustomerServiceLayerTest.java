@@ -42,7 +42,7 @@ public class CustomerServiceLayerTest {
 
         Invoice expectedInvoice = customerServiceLayer.addInvoice(actualInvoice);
         actualInvoice.setInvoiceId(expectedInvoice.getInvoiceId());
-        Assert.assertEquals(expectedInvoice,actualInvoice);
+        assertEquals(expectedInvoice,actualInvoice);
 
         actualInvoice = customerServiceLayer.addInvoice(actualInvoice);
         assertEquals(1,actualInvoice.getInvoiceId());
@@ -59,7 +59,7 @@ public class CustomerServiceLayerTest {
         actualInvoice = customerServiceLayer.addInvoice(actualInvoice);
 
      int deleted =   customerServiceLayer.deleteInvoice(actualInvoice.getInvoiceId());
-        Assert.assertEquals(1,deleted);
+        assertEquals(1,deleted);
     }
 
     @Test
@@ -72,9 +72,9 @@ public class CustomerServiceLayerTest {
         actualInvoiceItem.setUnitRate(30.00);
         InvoiceItem expectedInvoiceItem = customerServiceLayer.addInvoiceItem(actualInvoiceItem);
         actualInvoiceItem.setInvoiceItemId(expectedInvoiceItem.getInvoiceItemId());
-        Assert.assertEquals(expectedInvoiceItem,actualInvoiceItem);
+        assertEquals(expectedInvoiceItem,actualInvoiceItem);
 
-        int deleted = customerServiceLayer.deleteInvoice(actualInvoice.getInvoiceId());
+        int deleted = customerServiceLayer.deleteInvoice(actualInvoiceItem.getInvoiceId());
         assertEquals(1,deleted);
     }
 
