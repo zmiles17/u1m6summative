@@ -1,14 +1,20 @@
 package com.example.u1m6summative.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class InvoiceItem {
 
     private int invoiceItemId;
+    @NotNull(message = "Please provide invoiceid")
     private int invoiceId;
+    @NotNull(message = "Please provide itemId")
     private int itemId;
+    @NotNull(message = "Please provide quantity")
     private int quantity;
+    @NotNull(message = "Please provide unitRate")
     private Double unitRate;
+    @NotNull(message = "Please provide discount")
     private Double discount;
 
     public int getInvoiceItemId() {

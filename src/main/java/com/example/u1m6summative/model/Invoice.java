@@ -1,5 +1,6 @@
 package com.example.u1m6summative.model;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -7,10 +8,15 @@ import java.util.Objects;
 public class Invoice {
 
     private int invoiceId;
+    @NotNull(message = "Customer Id cannot be Empty or null")
     private int customerId;
+    @NotNull(message = "Order Date cannot be Empty or null")
     private LocalDate orderDate;
+    @NotNull(message = "Pick Up Date cannot be Empty or null")
     private LocalDate pickUpDate;
+    @NotNull(message = "Return Date cannot be Empty or null")
     private LocalDate returnDate;
+    @NotNull(message = "Late fee cannot be Empty or null")
     private Double lateFee;
 
     public int getInvoiceId() {
