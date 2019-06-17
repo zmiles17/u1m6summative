@@ -13,7 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -39,7 +42,7 @@ public class CustomerServiceLayerTest {
         actualInvoice.setPickUpDate(LocalDate.of(2019, 6, 19));
         actualInvoice.setReturndate(LocalDate.of(2019, 6, 25));
         actualInvoice = customerServiceLayer.addInvoice(actualInvoice);
-        Assert.assertEquals(1,actualInvoice.getInvoiceId());
+        assertEquals(1,actualInvoice.getInvoiceId());
     }
     @Test
     public void deleteInvoice() {
@@ -50,8 +53,19 @@ public class CustomerServiceLayerTest {
         actualInvoice.setPickUpDate(LocalDate.of(2019, 6, 19));
         actualInvoice.setReturndate(LocalDate.of(2019, 6, 25));
         actualInvoice = customerServiceLayer.addInvoice(actualInvoice);
-     int deleted =   customerServiceLayer.deleteInvoice(actualInvoice.getInvoiceId());
-        Assert.assertEquals(1,deleted);
+        int deleted =   customerServiceLayer.deleteInvoice(actualInvoice.getInvoiceId());
+        assertEquals(1,deleted);
+    }
+
+    @Test
+    public void getInvoicesByCustomer() {
+
+        List<Invoice> theThingIGot = customerServiceLayer.getInvoicesByCustomer("Ramya", "B");
+
+        assertEquals(theThingIGot.size(), 1);
+        assertEquals(theThingIGot.get(0).getInvoiceId(), 1);
+
+
 
     }
 
@@ -88,6 +102,9 @@ public class CustomerServiceLayerTest {
         invoice1.setPickUpDate(LocalDate.of(2019, 6, 19));
         invoice1.setReturndate(LocalDate.of(2019, 6, 25));
 
+        List<Invoice> iList = new ArrayList<>();
+        iList.add(invoice);
+
         invoiceItemDao = mock(InvoiceItemDao.class);
         InvoiceItem invoiceItem = new InvoiceItem();
         invoiceItem.setItemId(1);
@@ -97,7 +114,8 @@ public class CustomerServiceLayerTest {
         invoiceItem.setUnitRate(30.00);
 
         doReturn(invoice).when(invoiceDao).addInvoice(invoice1);
-       doReturn(1).when(invoiceDao).deleteInvoice(1);
+        doReturn(1).when(invoiceDao).deleteInvoice(1);
+        doReturn(iList).when(invoiceDao).getInvoicesByCustomer("Ramya", "B");
 
     }
 }
