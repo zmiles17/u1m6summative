@@ -15,10 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class CustomerServiceLayer {
@@ -40,6 +37,10 @@ public class CustomerServiceLayer {
         return buildCustomerViewModel(customerDao.getCustomer(id));
     }
 
+    public Customer addCustomer(Customer customer) {
+        return customerDao.addCustomer(customer);
+    }
+
     public CustomerViewModel saveCustomer(CustomerViewModel customerViewModel) {
         Customer customer = new Customer();
         customer.setFirstName(customerViewModel.getCustomer().getFirstName());
@@ -47,6 +48,33 @@ public class CustomerServiceLayer {
         customer.setEmail(customerViewModel.getCustomer().getEmail());
         customer.setCompany(customerViewModel.getCustomer().getCompany());
         customer.setPhone(customerViewModel.getCustomer().getPhone());
+        customer = customerDao.addCustomer(customer);
+        customerViewModel.setCustomer(customer);
+
+        List<Invoice> invoices = customerViewModel.getInvoiceList();
+        invoices.forEach(invoice -> {
+            invoice.setCustomerId(customerViewModel.getCustomer().getCustomerId());
+            invoiceDao.addInvoice(invoice);
+        });
+
+        invoices = invoiceDao.getInvoiceByCustomerId(customerViewModel.getCustomer().getCustomerId());
+        customerViewModel.setInvoiceList(invoices);
+
+        List<Item> itemList = customerViewModel.getItemList();
+        itemList.forEach(item -> itemDao.addItem(item));
+
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomerId(customer.getCustomerId());
+        List<InvoiceItem> invoiceItemList;
+        List<Item> items = new ArrayList<>();
+        Map<Integer, List<InvoiceItem>> invoiceItemMap = customerViewModel.getInvoiceItemMap();
+        for (Invoice invoice : invoiceList) {
+            invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
+            for(InvoiceItem invoiceItem: invoiceItemList) {
+                items.add(itemDao.getItem(invoiceItem.getItemId()));
+            }
+            invoiceItemMap.put(invoice.getInvoiceId(), invoiceItemList);
+        }
+
 
         //   return buildCustomerViewModel(customerDao.addCustomer(customer));
         return customerViewModel;

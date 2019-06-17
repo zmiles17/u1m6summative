@@ -68,8 +68,13 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     }
 
     @Override
-    public void deleteCustomer(int id) {
-        jdbcTemplate.update(DELETE_CUSTOMER_SQL, id);
+    public boolean deleteCustomer(int id) {
+        try {
+            jdbcTemplate.update(DELETE_CUSTOMER_SQL, id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private Customer mapRowToCustomer(ResultSet rs, int rowNum) throws SQLException {
