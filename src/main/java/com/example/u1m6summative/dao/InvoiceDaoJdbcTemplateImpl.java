@@ -36,6 +36,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "select * from invoice" +
                     "  inner join customer on invoice.customer_id = customer.customer_id" +
                     "  where customer.first_name like ? or customer.last_name like ?";
+    private static final String SELECT_INVOICES_BY_CUSTOMERID =
+            "select * from invoice where customer_id = ?";
+
 
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -83,9 +86,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     }
 
     @Override
-    public void deleteInvoice(int id) {
+    public int deleteInvoice(int id) {
 
-        jdbcTemplate.update(DELETE_INVOICE_SQL, id);
+     return jdbcTemplate.update(DELETE_INVOICE_SQL, id);
     }
 
     @Override
@@ -96,6 +99,16 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             return null;
         }
     }
+
+    @Override
+    public List<Invoice> getInvoiceByCustomerId(int id) {
+        try {
+            return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMERID, this::mapRowToInvoice, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
     private Invoice mapRowToInvoice(ResultSet rs, int rowNum) throws SQLException {
         Invoice invoice = new Invoice();

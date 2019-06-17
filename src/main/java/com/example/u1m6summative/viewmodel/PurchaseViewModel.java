@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-// this one will model invoices
+/**
+ * Retrieves details(customer,invoice items) for a single invoice
+ */
 
 public class PurchaseViewModel {
     private List<InvoiceItem> invoiceItemList;

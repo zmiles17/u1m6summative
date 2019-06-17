@@ -62,7 +62,7 @@ public class InvoiceDaoTests {
 
         assertEquals(invoice1, invoice);
 
-        invoiceDao.deleteInvoice(invoice.getInvoiceId());
+      invoiceDao.deleteInvoice(invoice.getInvoiceId());
 
         invoice1 = invoiceDao.getInvoice(invoice.getInvoiceId());
 
