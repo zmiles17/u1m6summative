@@ -14,4 +14,7 @@ public interface InvoiceItemDao {
     InvoiceItem updateInvoiceItem(InvoiceItem invoiceItem);
 
     void deleteInvoiceItem(int id);
+
+    public List<InvoiceItem> getInvoiceItemsByInvoiceId(int invoiceId);
+
 }
