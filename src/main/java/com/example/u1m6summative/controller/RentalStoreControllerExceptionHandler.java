@@ -1,5 +1,6 @@
 package com.example.u1m6summative.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,13 @@ public class RentalStoreControllerExceptionHandler {
     public ResponseEntity<VndErrors> badRequest(IllegalStateException e, WebRequest request){
         VndErrors error= new VndErrors(request.toString(),e.getMessage());
         ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error,HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+    @ExceptionHandler(value = {DataIntegrityViolationException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<VndErrors> badRequest(DataIntegrityViolationException e, WebRequest request){
+        VndErrors error= new VndErrors(request.toString(),e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error,HttpStatus.CONFLICT);
         return responseEntity;
     }
 }

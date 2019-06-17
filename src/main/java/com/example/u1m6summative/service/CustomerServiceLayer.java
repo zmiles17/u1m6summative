@@ -7,11 +7,13 @@ import com.example.u1m6summative.dao.ItemDao;
 import com.example.u1m6summative.model.Customer;
 import com.example.u1m6summative.model.Invoice;
 import com.example.u1m6summative.model.InvoiceItem;
+import com.example.u1m6summative.model.Item;
 import com.example.u1m6summative.viewmodel.CustomerViewModel;
-import com.example.u1m6summative.viewmodel.PurchaseViewModel;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +47,9 @@ public class CustomerServiceLayer {
         customer.setEmail(customerViewModel.getCustomer().getEmail());
         customer.setCompany(customerViewModel.getCustomer().getCompany());
         customer.setPhone(customerViewModel.getCustomer().getPhone());
-        return buildCustomerViewModel(customerDao.addCustomer(customer));
+
+        //   return buildCustomerViewModel(customerDao.addCustomer(customer));
+        return customerViewModel;
     }
 
     public List<CustomerViewModel> findAllCustomers() {
@@ -72,7 +76,7 @@ public class CustomerServiceLayer {
     }
 
     public void deleteCustomer(int id) {
-        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomer(id);
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomerId(id);
         invoiceList.stream()
                 .forEach(item -> invoiceItemDao.deleteInvoiceItem(item.getInvoiceId()));
         invoiceList.stream()
@@ -80,18 +84,57 @@ public class CustomerServiceLayer {
         customerDao.deleteCustomer(id);
     }
 
-    private CustomerViewModel buildCustomerViewModel(Customer customer) {
-        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomer(customer.getCustomerId());
-        List<InvoiceItem> invoiceItemList;
-        // <Integer invoiceId, InvoiceItem InvoiceItemList>
-        Map<Integer,List<InvoiceItem>> invoiceItemMap =  new HashMap<>();
-        for(Invoice invoice:invoiceList){
-            invoiceItemList=invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
-            invoiceItemMap.put(invoice.getInvoiceId(),invoiceItemList);
-        }
+    public Item addItem(Item item) {
+        return itemDao.addItem(item);
+    }
 
+    public List<Item> findAllItem() {
+        return itemDao.getAllItem();
+    }
+
+    public Item findItem(int id) {
+        return itemDao.getItem(id);
+    }
+
+    public void updateItem(Item item) {
+        itemDao.updateItem(item);
+    }
+
+    @Transactional
+    public void removeItem(int id) throws DataIntegrityViolationException  {
+        itemDao.deleteItem(id);
+    }
+
+    @Transactional
+     public Invoice addInvoice(Invoice invoice) {
+         return  invoiceDao.addInvoice(invoice);
+     }
+
+    @Transactional
+     public int deleteInvoice(int invoiceId) throws DataIntegrityViolationException {
+         List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceId);
+         for(InvoiceItem invoiceItem:invoiceItemList){
+             invoiceItemDao.deleteInvoiceItem(invoiceItem.getInvoiceItemId());
+         }
+       return invoiceDao.deleteInvoice(invoiceId);
+     }
+
+    private CustomerViewModel buildCustomerViewModel(Customer customer) {
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomerId(customer.getCustomerId());
+        List<InvoiceItem> invoiceItemList;
+        List<Item> items = new ArrayList<>();
+        // <Integer invoiceId, InvoiceItem InvoiceItemList>
+        Map<Integer, List<InvoiceItem>> invoiceItemMap = new HashMap<>();
+        for (Invoice invoice : invoiceList) {
+            invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
+            for(InvoiceItem invoiceItem: invoiceItemList) {
+                items.add(itemDao.getItem(invoiceItem.getItemId()));
+            }
+            invoiceItemMap.put(invoice.getInvoiceId(), invoiceItemList);
+        }
         CustomerViewModel customerViewModel = new CustomerViewModel();
         customerViewModel.setCustomer(customer);
+        customerViewModel.setItemList(items);
         customerViewModel.setInvoiceList(invoiceList);
         customerViewModel.setInvoiceItemMap(invoiceItemMap);
         return customerViewModel;
