@@ -101,8 +101,8 @@ public class CustomerServiceLayer {
     }
 
     @Transactional
-    public void removeItem(int id) throws DataIntegrityViolationException  {
-        itemDao.deleteItem(id);
+    public int removeItem(int id) throws DataIntegrityViolationException  {
+        return itemDao.deleteItem(id);
     }
 
     @Transactional
