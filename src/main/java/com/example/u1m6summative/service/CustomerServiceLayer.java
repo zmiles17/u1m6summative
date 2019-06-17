@@ -101,23 +101,29 @@ public class CustomerServiceLayer {
     }
 
     @Transactional
-    public void removeItem(int id) throws DataIntegrityViolationException  {
+    public void removeItem(int id) throws DataIntegrityViolationException {
         itemDao.deleteItem(id);
     }
 
     @Transactional
-     public Invoice addInvoice(Invoice invoice) {
-         return  invoiceDao.addInvoice(invoice);
-     }
+    public Invoice addInvoice(Invoice invoice) {
+        invoice = invoiceDao.addInvoice(invoice);
+        return invoice;
+    }
 
     @Transactional
-     public int deleteInvoice(int invoiceId) throws DataIntegrityViolationException {
-         List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceId);
-         for(InvoiceItem invoiceItem:invoiceItemList){
-             invoiceItemDao.deleteInvoiceItem(invoiceItem.getInvoiceItemId());
-         }
-       return invoiceDao.deleteInvoice(invoiceId);
-     }
+    public int deleteInvoice(int invoiceId) throws DataIntegrityViolationException {
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceId);
+        for (InvoiceItem invoiceItem : invoiceItemList) {
+            invoiceItemDao.deleteInvoiceItem(invoiceItem.getInvoiceItemId());
+        }
+        return invoiceDao.deleteInvoice(invoiceId);
+    }
+
+    @Transactional
+    public InvoiceItem addInvoiceItem(InvoiceItem invoiceItem) {
+        return invoiceItemDao.addInvoiceItem(invoiceItem);
+    }
 
     private CustomerViewModel buildCustomerViewModel(Customer customer) {
         List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomerId(customer.getCustomerId());
@@ -127,7 +133,7 @@ public class CustomerServiceLayer {
         Map<Integer, List<InvoiceItem>> invoiceItemMap = new HashMap<>();
         for (Invoice invoice : invoiceList) {
             invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
-            for(InvoiceItem invoiceItem: invoiceItemList) {
+            for (InvoiceItem invoiceItem : invoiceItemList) {
                 items.add(itemDao.getItem(invoiceItem.getItemId()));
             }
             invoiceItemMap.put(invoice.getInvoiceId(), invoiceItemList);
