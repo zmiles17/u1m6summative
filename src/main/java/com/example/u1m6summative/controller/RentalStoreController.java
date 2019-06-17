@@ -12,7 +12,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
+
 import java.util.List;
 
 
@@ -107,14 +109,9 @@ public class RentalStoreController {
 
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice addInvoice(@RequestBody @Valid Invoice invoice) {
+    public Invoice addInvoice(@RequestBody @Valid Invoice invoice) throws IllegalStateException {
+        return customerServiceLayer.addInvoice(invoice);
 
-        try {
-            return customerServiceLayer.addInvoice(invoice);
-
-        } catch (IllegalStateException e) {
-            return null;
-        }
     }
 
     @RequestMapping(value = "/invoice/{invoiceId}", method = RequestMethod.DELETE)
@@ -128,6 +125,7 @@ public class RentalStoreController {
 
     }
 
+
     @RequestMapping(value = "/invoiceItem", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceItem addInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem) {
@@ -135,7 +133,13 @@ public class RentalStoreController {
             return customerServiceLayer.addInvoiceItem(invoiceItem);
         } catch (IllegalStateException e) {
             return null;
-        }
+        }    @RequestMapping(value = "/invoice/{firstName}/{lastName}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Invoice> getInvoicesByCustomer(@PathVariable String firstName, String lastName){
+        List<Invoice> iList = customerServiceLayer.getInvoicesByCustomer(firstName, lastName);
+
+        return iList;
+
     }
 
 

@@ -73,10 +73,10 @@ public class ItemDaoJdbcTemplateImpl implements ItemDao {
     }
 
     @Override
-    public void deleteItem(int id) {
-        jdbcTemplate.update(DELETE_ITEM_SQL, id);
-
+    public int deleteItem(int id) {
+        return jdbcTemplate.update(DELETE_ITEM_SQL, id);
     }
+
     private Item mapRowToItem(ResultSet rs, int rowNum) throws SQLException {
         Item item = new Item();
         item.setItemId(rs.getInt("item_id"));
